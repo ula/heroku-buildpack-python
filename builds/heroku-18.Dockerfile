@@ -10,6 +10,6 @@ ENV WORKSPACE_DIR="/app/builds" \
 RUN apt-get update && apt-get install --no-install-recommends -y python-pip-whl=9.0.1-2 python-pip=9.0.1-2 python-setuptools python-wheel && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /app/
-RUN pip install --disable-pip-version-check --no-cache-dir -r /app/requirements.txt
+RUN pip install --disable-pip-version-check --no-cache-dir -r /app/requirements.txt --find-links=wheelhouse
 
 COPY . /app
