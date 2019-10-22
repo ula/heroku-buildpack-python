@@ -44,10 +44,10 @@ if [ ! "$SKIP_PIP_INSTALL" ]; then
 
     WHEELS=""
     if [ -d "$BUILD_DIR/weheelhouse" ]; then
-        WHEELS+=" ----find-links=$BUILD_DIR/weheelhouse"
+        /app/.heroku/python/bin/pip install -r "$BUILD_DIR/requirements.txt" --find-links=$BUILD_DIR/weheelhouse --exists-action=w --src=/app/.heroku/src --disable-pip-version-check --no-cache-dir 2>&1 | tee "$WARNINGS_LOG" | cleanup | indent
+    else
+        /app/.heroku/python/bin/pip install -r "$BUILD_DIR/requirements.txt" --exists-action=w --src=/app/.heroku/src --disable-pip-version-check --no-cache-dir 2>&1 | tee "$WARNINGS_LOG" | cleanup | indent
     fi
-
-    /app/.heroku/python/bin/pip install -r "$BUILD_DIR/requirements.txt" "$WHEELS" --exists-action=w --src=/app/.heroku/src --disable-pip-version-check --no-cache-dir 2>&1 | tee "$WARNINGS_LOG" | cleanup | indent
     PIP_STATUS="${PIPESTATUS[0]}"
     set -e
 
