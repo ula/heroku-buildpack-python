@@ -3,10 +3,13 @@ site
 .DS_Store
 
 /.envrc
-repos/*
+.hatchet/repos/
 
 #Venv
 buildpack/*
 
 builds/dockerenv.staging*
 builds/dockerenv.production
+
+test/scratch
+.rspec_status

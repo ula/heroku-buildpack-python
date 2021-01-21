@@ -2,7 +2,7 @@
 
 # Heroku Buildpack: Python
 
-[![Build Status](https://travis-ci.org/heroku/heroku-buildpack-python.svg?branch=master)](https://travis-ci.org/heroku/heroku-buildpack-python)
+[![Build Status](https://travis-ci.com/heroku/heroku-buildpack-python.svg?branch=main)](https://travis-ci.com/heroku/heroku-buildpack-python)
 
 This is the official [Heroku buildpack](https://devcenter.heroku.com/articles/buildpacks) for Python apps.
 
@@ -16,7 +16,7 @@ See it in Action
 $ ls
 my-application		requirements.txt	runtime.txt
 
-$ git push heroku master
+$ git push heroku main
 Counting objects: 4, done.
 Delta compression using up to 8 threads.
 Compressing objects: 100% (2/2), done.
@@ -26,7 +26,7 @@ remote: Compressing source files... done.
 remote: Building source:
 remote:
 remote: -----> Python app detected
-remote: -----> Installing python-3.7.4
+remote: -----> Installing python
 remote: -----> Installing pip
 remote: -----> Installing SQLite3
 remote: -----> Installing requirements with pip
@@ -44,9 +44,10 @@ A `requirements.txt` must be present at the root of your application's repositor
 
 To specify your python version, you also need a `runtime.txt` file - unless you are using the default Python runtime version.
 
-Current default Python Runtime: Python 3.6.9
+Current default Python Runtime: Python 3.6.12
 
-Alternatively, you can provide a `setup.py` file, or a `Pipfile`. Using `Pipenv` will generate `runtime.txt` based on `python-version` at build time.
+Alternatively, you can provide a `setup.py` file, or a `Pipfile`.
+Using `pipenv` will generate `runtime.txt` at build time if one of the field `python_version` or `python_full_version` is specified in the `requires` section of your `Pipfile`.
 
 Specify a Buildpack Version
 ---------------------------
@@ -61,26 +62,33 @@ Specify a Python Runtime
 
 Supported runtime options include:
 
-- `python-3.7.4`
-- `python-3.6.9`
-- `python-2.7.16`
+- `python-3.9.1`
+- `python-3.8.7`
+- `python-3.7.9`
+- `python-3.6.12`
+- `python-2.7.18`
 
 ## Tests
 
 The buildpack tests use [Docker](https://www.docker.com/) to simulate
 Heroku's [stack images.](https://devcenter.heroku.com/articles/stack)
 
-To run the test suite:
+To run the test suite against the default stack:
 
 ```
 make test
 ```
 
-Or to test in a particular stack:
+Or to test against a particular stack:
 
 ```
-make test-heroku-18
-make test-heroku-16
+make test STACK=heroku-16
+```
+
+To run only a subset of the tests:
+
+```
+make test TEST_CMD=tests/versions
 ```
 
 The tests are run via the vendored
